@@ -97,13 +97,16 @@ public class Test01 {
 				}
 				break;
 			case 4:
+				//가장 많이 나온 수가 여러 개일 경우 가장 작은 수가 출력
 				int max = dice[dice.length - 1];
+				int idx = 0;
 				for (int i = dice.length - 2; i >= 0; i--) {
 					if (max < dice[i]) {
 						max = dice[i];
+						idx = i + 1;
 					}
 				}
-				System.out.println("가장 많이 나온 수는 " + max + "입니다.");
+				System.out.println("가장 많이 나온 수는 " + idx + "입니다.");
 				break;
 			case 5:
 				System.out.println("프로그램 종료");
