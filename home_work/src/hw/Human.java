@@ -5,6 +5,10 @@ public class Human {
 	int height;
 	int weight;
 	
+	Human(){
+		
+	}
+	
 	Human(String name, int height, int weight){
 		this.name = name;
 		this.height = height;
