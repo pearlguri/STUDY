@@ -13,3 +13,4 @@ public class HumanApplication {
 		human.getInformation();
 	}
 }
+

@@ -7,22 +7,10 @@ public class StandardWeightInfo extends Human {
 //		(2) public double getStandardWeight() : 표준체중을 구하는 기능
 //		( * 표준 체중 : (Height - 100) * 0.9 )
 	
-	double avg = (double)(height - 100) * 0.9;
 	
 	
 	StandardWeightInfo(String name, int height, int weight) {
 		super(name, height, weight);
 	}
 
-	public double getStandarWeight() {
-		return avg;
-	}
-	
-	public void getInformation() {
-		System.out.println("이름 : " + name);
-		System.out.println("키 : " + height);
-		System.out.println("몸무게 : " + weight);
-		System.out.println("표준체중 :  " + avg);
-	}
-	
 }
