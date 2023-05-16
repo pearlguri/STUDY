@@ -1,4 +1,4 @@
-package hw;
+package game;
 
 public class ArcadeGame implements Keypad {
 //	3) ArcadeGame 클래스를 정의한다.
@@ -54,10 +54,10 @@ public class ArcadeGame implements Keypad {
 	public void changeMode(int mode) {
 		if (mode == 0) {
 			this.mode = HARD_MODE;
-			System.out.println("현재 모드 : " + this.mode);
+			System.out.println(HARD_MODE);
 		} else if (mode == 1) {
 			this.mode = NORMAL_MODE;
-			System.out.println("현재 모드 : " + this.mode);
+			System.out.println(NORMAL_MODE);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package hw;
+package game;
 
 public class RPGgame implements Keypad {
 //	2) RPGgame 클래스를 정의한다.
@@ -35,9 +35,9 @@ public class RPGgame implements Keypad {
 
 	@Override
 	public void rightUpButton(int mode) {
-		if (mode == 0) {
+		if (mode == NORMAL_MODE) {
 			System.out.println("캐릭터가 한칸단위로 점프한다.");
-		} else if (mode == 1) {
+		} else if (mode == HARD_MODE) {
 			System.out.println("캐릭터가 두칸단위로 점프한다.");
 		}
 	}
@@ -53,12 +53,12 @@ public class RPGgame implements Keypad {
 
 	@Override
 	public void changeMode(int mode) {
-		if (mode == 0) {
+		if (mode == NORMAL_MODE) {
+			System.out.println("HARD_MODE");
 			this.mode = HARD_MODE;
-			System.out.println("현재 모드 : " + mode);
 		} else if (mode == 1) {
+			System.out.println("NORMAL_MODE");
 			this.mode = NORMAL_MODE;
-			System.out.println("현재 모드 : " + mode);
 		}
 	}
 

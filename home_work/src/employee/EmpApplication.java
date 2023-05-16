@@ -1,4 +1,4 @@
-package hw;
+package employee;
 
 public class EmpApplication {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package hw;
+package game;
 
 public interface Keypad {
 //	1) Keypad 인터페이스를 정의한다.

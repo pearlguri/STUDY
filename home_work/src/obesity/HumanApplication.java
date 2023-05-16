@@ -1,4 +1,4 @@
-package hw;
+package obesity;
 
 public class HumanApplication {
 	public static void main(String[] args) {

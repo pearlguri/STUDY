@@ -1,4 +1,4 @@
-package hw;
+package obesity;
 
 public class StandardWeightInfo extends Human {
 

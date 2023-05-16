@@ -1,4 +1,4 @@
-package hw;
+package obesity;
 
 public class Human {
 	String name;

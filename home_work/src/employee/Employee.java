@@ -1,4 +1,4 @@
-package hw;
+package employee;
 
 public class Employee {
 	String name;

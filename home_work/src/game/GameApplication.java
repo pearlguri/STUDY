@@ -1,4 +1,4 @@
-package hw;
+package game;
 
 public class GameApplication {
 	public static void main(String[] args) {
@@ -27,6 +27,21 @@ public class GameApplication {
 		rpg.leftUpButton();
 		rpg.rightUpButton(0);
 		rpg.changeMode(0);
+		rpg.rightUpButton(1);
+		rpg.rightDownButton(1);
+		rpg.leftDownButton();
+		rpg.changeMode(1);
+		rpg.rightDownButton(0);
 		
+		System.out.println("===========================");
+		
+		ArcadeGame arcade = new ArcadeGame();
+		arcade.leftUpButton();
+		arcade.rightUpButton(0);
+		arcade.leftDownButton();
+		arcade.changeMode(0);
+		arcade.rightUpButton(1);
+		arcade.leftUpButton();
+		arcade.rightDownButton(1);
 	}
 }

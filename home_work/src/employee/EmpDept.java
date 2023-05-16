@@ -1,4 +1,4 @@
-package hw;
+package employee;
 
 public class EmpDept extends Employee {
 

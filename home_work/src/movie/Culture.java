@@ -1,6 +1,6 @@
-package hw;
+package movie;
 
-public class Culture {
+public abstract class Culture {
 //	- 제목, 참여감독 수, 참여배우 수, 관객수, 총점을 필드로 가진다.
 //	- 제목, 참여감독 수, 참여배우 수는 생성자를 이용하여 값을 초기화한다.
 //	- 메소드는 다음과 같이 정의한다.
@@ -12,7 +12,8 @@ public class Culture {
 	int dirNum; //감독수
 	int actNum; //배우수
 	int audNum; //관객수
-	int total; //총점
+	int score; //총점
+	int grade; //평점
 
 
 	Culture(String title, int dirNum, int actNum){
@@ -23,10 +24,19 @@ public class Culture {
 	}
 
 	public void setTotalScore(int score, int audNum) {
+			this.score = this.score + score;
 			this.audNum = this.audNum + audNum;
-			this.total = this.total + total;
 	}
 	
+	public String getGrade() {
+		String grade = "";
+		for(int i=0; i<this.grade; i++) {
+			grade = grade + "☆";
+		}
+		return grade;
+	}
+	
+	public abstract void getInformation();
 	
 	
 	

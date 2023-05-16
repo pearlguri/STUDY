@@ -1,4 +1,4 @@
-package hw;
+package obesity;
 
 public class ObesityInfo extends Human {
 //	- 메소드는 다음과 같이 정의한다.
