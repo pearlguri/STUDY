@@ -21,5 +21,6 @@ public interface Keypad {
 	public void rightUpButton(int mode);
 	public void rightDownButton(int mode);
 	public void changeMode(int mode);
+	void changeMode();
 	
 }

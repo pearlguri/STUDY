@@ -30,7 +30,7 @@ public abstract class Culture {
 	
 	public String getGrade() {
 		String grade = "";
-		for(int i=0; i<this.grade; i++) {
+		for(int i=0; i<this.grade; i++) { //this 다시보기
 			grade = grade + "☆";
 		}
 		return grade;

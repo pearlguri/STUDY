@@ -41,6 +41,7 @@ public class ArcadeGame implements Keypad {
 		}
 	}
 
+
 	@Override
 	public void rightDownButton(int mode) {
 		if (mode == NORMAL_MODE) {
@@ -51,7 +52,7 @@ public class ArcadeGame implements Keypad {
 	}
 
 	@Override
-	public void changeMode(int mode) {
+	public void changeMode() {
 		if (mode == 0) {
 			this.mode = HARD_MODE;
 			System.out.println(HARD_MODE);
@@ -59,5 +60,11 @@ public class ArcadeGame implements Keypad {
 			this.mode = NORMAL_MODE;
 			System.out.println(NORMAL_MODE);
 		}
+	}
+
+	@Override
+	public void changeMode(int mode) {
+		// TODO Auto-generated method stub
+		
 	}
 }

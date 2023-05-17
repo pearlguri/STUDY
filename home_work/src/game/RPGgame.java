@@ -51,8 +51,9 @@ public class RPGgame implements Keypad {
 		}
 	}
 
+
 	@Override
-	public void changeMode(int mode) {
+	public void changeMode() {
 		if (mode == NORMAL_MODE) {
 			System.out.println("HARD_MODE");
 			this.mode = HARD_MODE;
@@ -60,6 +61,12 @@ public class RPGgame implements Keypad {
 			System.out.println("NORMAL_MODE");
 			this.mode = NORMAL_MODE;
 		}
+	}
+
+	@Override
+	public void changeMode(int mode) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
