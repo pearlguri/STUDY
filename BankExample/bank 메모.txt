@@ -1,0 +1,32 @@
+은행 관리 프로그램
+//login, logout, exit
+//login -> 고객 / 은행원
+//고객
+-> 계좌 조회, 입출금(한번에 구현), 이체
+//은행원
+->고객 등록, 계좌 개설, 입출금, 이체, 해지
+
+//회원 TABLE -> 기본 정보
+//회원 id, pw, 이름, 권한
+//계좌 TABLE -> 계좌 정보 조회, 입출금
+//계좌 번호, 회원id, 돈, 개설 날짜
+
+create user c##bank identified by 1234;
+
+grant create session to c##bank;
+
+grant resource to c##bank;
+
+은행관리 이름으로 생성
+create table member(
+member_id varchar2(20) primary key,
+member_pw varchar2(20),
+member_name varchar2(12),
+member_auth char);
+
+create table account{
+account_id number primary key,
+account_balance number,
+account_credate date default sysdate,
+member_id varchar2(20),
+CONSTRAINT fk_account_memberID FOREIGN KEY(member_id) references member(member_id);
