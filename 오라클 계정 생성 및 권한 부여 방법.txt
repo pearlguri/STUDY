@@ -1,0 +1,12 @@
+Oracle User 생성 -> 12c 이상 적용내용
+
+관리자 접속
+첫 번째 방법
+- CMD -> sqlplus "/ as sysdba"
+두 번째 방법
+- SqlDeveloper 실행
+
+계정 생성 & 권한 부여
+1. create user c##계정명 identified by 비밀번호
+2. grant create session, resource, unlimited tablespace to c##계정명
+
