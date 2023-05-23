@@ -127,30 +127,9 @@ public class CoffeeDAO extends DAO {
 		}
 		return result;
 	}
+}
 
 	// 6. 매출
 	// 1) 데이터 조회 후 java 처리 -> getCoffeeList()
 	// 2)DB sum(coffee_price)
-	public List<Coffee> sales() {
-		List<Coffee> list = new ArrayList<>();
-		Coffee coffee = null;
-		try {
-			conn();
-			String sql = "select * from coffe";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				coffee.setCoffeeMenu(rs.getString("coffee_menu"));
-				coffee.setCoffeeSales(count);
-				coffee.setCoffeeSales(rs.getInt("coffee_sales"));
-				list.add(coffee);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			disconn();
-		}
-		return list;
-	}
-}
+	

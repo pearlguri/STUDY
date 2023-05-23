@@ -34,7 +34,7 @@ public class CoffeeApp {
 				cs.deleteMenu();
 
 			} else if (menuNo == 6) {
-				cs.sell();
+				cs.storesales();
 			} else if (menuNo == 7) {
 				System.out.println("end of prog");
 				break;

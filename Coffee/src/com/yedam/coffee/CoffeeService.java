@@ -56,7 +56,6 @@ public class CoffeeService {
 	public void sellMenu() {
 		System.out.println("메뉴 입력>");
 		String menu = sc.nextLine();
-		
 
 		int result = CoffeeDAO.getInstance().sellMenu(null);
 		if (result > 0) {
@@ -77,14 +76,20 @@ public class CoffeeService {
 			System.out.println("메뉴 삭제 실패");
 		}
 	}
-	
-	//6. 매출
-	public void sell() {
-		List<Coffee> money = CoffeeDAO.getInstance().sales();
-		for(int i=0; i<money.size(); i++) {
-			System.out.println("메뉴 : " + money.get(i).getCoffeeMenu());
-			System.out.println("판매갯수 : " + money.get(i).getCoffeeSales());
-			System.out.println("판매 금액 : " + money.get(i).getCoffeeSales());
+
+	// 6. 매출
+	public void storesales() {
+		System.out.println("======= 매출 내역서 =======");
+		List<Coffee> list = CoffeeDAO.getInstance().getCoffeeList();
+		int totalSales = 0;
+		for (Coffee coffee : list) {
+			System.out.println("메   뉴 : " + coffee.getCoffeeMenu());
+			System.out.println("가   격 : " + coffee.getCoffeePrice());
+			System.out.println("판매잔수 : " + coffee.getCoffeeSales());
+			System.out.println("판매금액 : " + (coffee.getCoffeePrice() * coffee.getCoffeeSales()));
+			totalSales += (coffee.getCoffeePrice() * coffee.getCoffeeSales());
 		}
+		System.out.println("==================================");
+		System.out.println("총 판매 금액 : " + totalSales + "원");
 	}
 }
