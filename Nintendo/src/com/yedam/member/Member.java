@@ -1,5 +1,7 @@
 package com.yedam.member;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +19,6 @@ public class Member {
 	private String memberName;
 	private String memberPhone;
 	private String memberGrade;
+	private Date start;
+	private Date end;
 }
