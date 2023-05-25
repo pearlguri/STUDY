@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.yedam.common.DAO;
 import com.yedam.game.Game;
+import com.yedam.review.Review;
 
 public class MemberDAO extends DAO {
 	private static MemberDAO memberDao = null;
@@ -51,13 +52,11 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "INSERT INTO member VALUES (?,?,?,?,?)";
+			String sql = "insert into member values('user00' || seq_id.nextval, ?, ?, ?, 'N')";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberId());
-			pstmt.setString(2, member.getMemberPw());
-			pstmt.setString(3, member.getMemberName());
-			pstmt.setString(4, member.getMemberPhone());
-			pstmt.setString(5, member.getMemberGrade());
+			pstmt.setString(1, member.getMemberPw());
+			pstmt.setString(2, member.getMemberName());
+			pstmt.setString(3, member.getMemberPhone());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -102,15 +101,16 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			if (cmd == 1) {
-				String sql = "UPDATE game SET game_status = 'Y', member_id = ? WHERE game_id = ?";
+			if (cmd == 1) { // TO_CHAR(SYSDATE, 'YYYYMMDD'), TO_CHAR(SYSDATE + 20)
+				String sql = "UPDATE game SET game_status = 'Y', game_rental_start = TO_CHAR(SYSDATE, 'YYYYMMDD'), game_rental_end = TO_CHAR(SYSDATE + 20), member_id = ? WHERE game_id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, game.getMemberId());
 				pstmt.setString(2, game.getGameId());
 
 				result = pstmt.executeUpdate();
+
 			} else if (cmd == 2) {
-				String sql = "UPDATE game SET game_status = 'N', member_id = '' WHERE game_id = ?";
+				String sql = "UPDATE game SET game_status = 'N', game_rental_start = null, game_rental_end = null, member_id = null WHERE game_id = ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, game.getGameId());
 
@@ -123,16 +123,97 @@ public class MemberDAO extends DAO {
 		}
 		return result;
 	}
+	
+	//리뷰 조회
+	public List<Review> Review(){
+		List<Review> list = new ArrayList<>();
+		Review review = null;
+		try {
+			conn();
+			String sql = "select * from review";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				review = new Review();
+				review.setMemberId(rs.getString("member_id"));
+				review.setText(rs.getString("text"));
+			}
+			
+			list.add(review);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return list;
+	}
+	
+	// 리뷰 입력
+	public int insertReview(Review review) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "insert into review values(?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, review.getMemberId());
+			pstmt.setString(2, review.getText());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
 
-	// 5. 게임팩조회 - 전체조회, 단건조회 => 대여여부, 남은 대여일수 알수 있도록 service에서 구성
-	public List<Game> getGameInfo() {
+	// 리뷰 수정
+	public int changeReview(Review review) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "update review set text = ? where member_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, review.getText());
+			pstmt.setString(2, review.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
+	// 리뷰 삭제
+	public int deleteReview(String memberId) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "delete from review where member_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
+
+	// 5. 게임팩조회 => 대여여부, 남은 대여일수 알수 있도록 service에서 구성
+	// 내가 대여 중인 게임팩
+	public List<Game> getMyGame() {
 		List<Game> list = new ArrayList<>();
 		Game game = null;
 		try {
 			conn();
 			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
 					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
-					+ "from game g join member m\r\n" + "on g.member_id = m.member_id";
+					+ "from game g join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -156,14 +237,46 @@ public class MemberDAO extends DAO {
 		return list;
 	}
 
+	// 전체조회
+	public List<Game> getGameInfo() {
+		List<Game> list = new ArrayList<>();
+		Game game = null;
+		try {
+			conn();
+			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
+					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
+					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				game = new Game();
+				game.setGameId(rs.getString("game_id"));
+				game.setGameName(rs.getString("game_name"));
+				game.setStart(rs.getDate("game_rental_start"));
+				game.setEnd(rs.getDate("game_rental_end"));
+				game.setGameStatus(rs.getString("game_status"));
+				game.setMemberId(rs.getString("member_id"));
+				game.setLeft(rs.getString("left"));
+
+				list.add(game);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return list;
+	}
+
+	// 단건조회
 	public Game getGame(String gameId) {
 		Game games = null;
 		try {
 			conn();
 			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
 					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
-					+ "from game g join member m\r\n"
-					+ "on g.member_id = m.member_id";
+					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "where game_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, gameId);
 
@@ -191,7 +304,7 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "UPDATE member SET member_pw = ? WHERE memberid = ?";
+			String sql = "UPDATE member SET member_pw = ? WHERE member_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberPw());
 			pstmt.setString(2, member.getMemberId());
@@ -209,7 +322,7 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "UPDATE member SET member_phone = ? WHERE memberid = ?";
+			String sql = "UPDATE member SET member_phone = ? WHERE member_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberPhone());
 			pstmt.setString(2, member.getMemberId());

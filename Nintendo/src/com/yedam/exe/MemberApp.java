@@ -26,12 +26,15 @@ public class MemberApp {
 				ms.rentalGame();
 				break;
 			case 3:
-				System.out.println("1. 게임팩 전체 조회 | 2. 게임팩 단건 조회");
+				System.out.println("1. 내가 대여 중인 게임팩 | 2. 게임팩 전체 조회 | 3. 게임팩 단건 조회");
 				int gameNo = Integer.parseInt(sc.nextLine());
 				if (gameNo == 1) {
+					ms.getMyGame();
+					break;
+				}else if(gameNo == 2) {
 					ms.getGameInfo();
 					break;
-				} else if (gameNo == 2) {
+				}else if (gameNo == 3) {
 					ms.getGame();
 					break;
 				}

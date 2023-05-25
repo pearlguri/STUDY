@@ -99,17 +99,105 @@ public class AdminDAO extends DAO {
 		}
 		return list;
 	}
+	
+//	-회원 등급 수정
+	public int modifyGrade(Member member, int cmd) {
+		int result = 0;
+		try {
+			conn();
+			if(cmd == 1) {
+			String sql = "update member set member_grade = 'V' where member_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			}else if(cmd == 2) {
+				String sql = "update member set member_grade = 'N' where member_id = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, member.getMemberId());
+				
+				result = pstmt.executeUpdate();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
 
-//	2. 게임팩 관리
+//	2. 게임팩 조회
+//	-전체조회
+	public List<Game> getGameInfo() {
+		List<Game> list = new ArrayList<>();
+		Game game = null;
+		try {
+			conn();
+			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
+					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
+					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				game = new Game();
+				game.setGameId(rs.getString("game_id"));
+				game.setGameName(rs.getString("game_name"));
+				game.setStart(rs.getDate("game_rental_start"));
+				game.setEnd(rs.getDate("game_rental_end"));
+				game.setGameStatus(rs.getString("game_status"));
+				game.setMemberId(rs.getString("member_id"));
+				game.setLeft(rs.getString("left"));
+
+				list.add(game);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return list;
+	}
+
+//	-단건조회
+	public Game getGame(String gameId) {
+		Game game = null;
+		try {
+			conn();
+			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
+					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
+					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "where game_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, gameId);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				game = new Game();
+				game.setGameId(rs.getString("game_id"));
+				game.setGameName(rs.getString("game_name"));
+				game.setStart(rs.getDate("game_rental_start"));
+				game.setEnd(rs.getDate("game_rental_end"));
+				game.setGameStatus(rs.getString("game_status"));
+				game.setMemberId(rs.getString("member_id"));
+				game.setLeft(rs.getString("left"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return game;
+	}
+
+//	3. 게임팩 관리
 //	-게임팩 추가
 	public int insertGame(Game game) {
 		int result = 0;
 		try {
 			conn();
-			String sql = "insert into game values (?, ?, TO_CHAR(SYSDATE, 'YYYYMMDD'), TO_CHAR(SYSDATE + 20, 'YYYYMMDD'), 'N', null)";
+			String sql = "insert into game values ('00' || seq_id.nextval, ?, null, null, 'N', null)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, game.getGameId());
-			pstmt.setString(2, game.getGameName());
+			pstmt.setString(1, game.getGameName());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -138,7 +226,7 @@ public class AdminDAO extends DAO {
 		return result;
 	}
 
-//	3. 회원 삭제(회원 아이디 입력시)
+//	4. 회원 삭제(회원 아이디 입력시)
 	public int deleteMember(String id) {
 		int result = 0;
 		try {

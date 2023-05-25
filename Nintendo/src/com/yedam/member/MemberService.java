@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.yedam.game.Game;
+import com.yedam.review.Review;
 
 public class MemberService {
 	public static Member memberInfo = null;
@@ -42,32 +43,35 @@ public class MemberService {
 	// 3. 회원가입
 	public void insertMember() {
 		System.out.println("회원가입");
-		String id = "";
-		while (true) {
-			System.out.println("ID>");
-			id = sc.nextLine();
-			Member member = MemberDAO.getInstance().login(id);
-			if (member != null) {
-				System.out.println("존재하는 ID 입니다.");
-			} else if (member == null) {
-				System.out.println("사용가능한 ID입니다.");
-				break;
-			}
-		}
+//		String id = "";
+//		while (true) {
+//			System.out.println("ID>");
+//			id = sc.nextLine();
+//			Member member = MemberDAO.getInstance().login(id);
+//			if (member != null) {
+//				System.out.println("존재하는 ID 입니다.");
+//			} else if (member == null) {
+//				System.out.println("사용가능한 ID입니다.");
+//				break;
+//			}
+//		}
+
+		System.out.println("회원 ID는 가입순서에 따라 자동 적용됩니다.");
+		System.out.println("✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨");
+
 		System.out.println("PW>");
 		String pw = sc.nextLine();
+
+		System.out.println("Name>");
+		String name = sc.nextLine();
 
 		System.out.println("Phone>");
 		String phone = sc.nextLine();
 
-		System.out.println("Grade>");
-		String addr = sc.nextLine();
-
 		Member mem = new Member();
-		mem.setMemberId(id);
 		mem.setMemberPw(pw);
+		mem.setMemberName(name);
 		mem.setMemberPhone(phone);
-		mem.setMemberGrade(addr);
 
 		int result = MemberDAO.getInstance().insertMember(mem);
 
@@ -93,7 +97,7 @@ public class MemberService {
 	public void rentalGame() {
 		System.out.println("게임팩 대여 및 반납");
 		System.out.println("1. 대여 | 2. 반납");
-		int rmenu = Integer.parseInt(sc.nextLine());
+		int rMenu = Integer.parseInt(sc.nextLine());
 
 		Game game = new Game();
 
@@ -105,16 +109,64 @@ public class MemberService {
 
 		game.setGameId(gameId);
 		game.setMemberId(memId);
-		int result = MemberDAO.getInstance().rentalGame(game, rmenu);
 
-		if (result > 0) {
-			System.out.println("게임팩 대여 및 반납 처리 완료");
-		} else {
-			System.out.println("게임팩 대여및 반납 처리 실패");
+		int result = MemberDAO.getInstance().rentalGame(game, rMenu);
+
+		if (rMenu == 1) {
+			if (game.getGameStatus().equals("Y")) {
+				System.out.println("이미 대여된 게임팩 입니다.");
+			} else if (result > 0) {
+				System.out.println("게임팩 대여 완료");
+			} else {
+				System.out.println("게임팩 대여 실패");
+			}
+		} else if (rMenu == 2) {
+			if (game.getGameStatus().equals("N")) {
+				System.out.println("이미 반납된 게임팩 입니다.");
+			} else if (result > 0) {
+				System.out.println("게임팩 반납 완료");
+			} else {
+				System.out.println("게임팩 반납 실패");
+			}
 		}
 	}
 
-	// 6. 게임팩조회 - 전체조회, 단건조회 => 대여여부, 남은 대여일수 알수 있도록 service에서 구성
+//		if(rMenu == 1) {
+//			if (result > 0) {
+//				System.out.println("게임팩 대여 완료");
+//			} else {
+//				System.out.println("게임팩 대여 실패");
+//			}
+//		}else if(rMenu == 2) {
+//			if (result > 0) {
+//				System.out.println("게임팩 반납 완료");
+//			} else {
+//				System.out.println("게임팩 반납 실패");
+//			}
+//		}
+//	}
+
+	// 6. 게임팩조회 => 대여여부, 남은 대여일수 알수 있도록 service에서 구성
+	// 내가 대여 중인 게임팩
+	public void getMyGame() {
+		List<Game> list = MemberDAO.getInstance().getMyGame();
+		System.out.println("내가 대여 중인 게임팩 조회");
+		if (list.size() == 0) {
+			System.out.println("대여 중인 게임팩이 없습니다.");
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				System.out.println("게임번호 : " + list.get(i).getGameId());
+				System.out.println("게임명: " + list.get(i).getGameName());
+				System.out.println("대여시작 : " + list.get(i).getStart());
+				System.out.println("대여종료 : " + list.get(i).getEnd());
+				System.out.println("대여여부: " + list.get(i).getGameStatus());
+				System.out.println("빌린회원 : " + list.get(i).getMemberId());
+				System.out.println("남은 대여 일수 : " + list.get(i).getLeft());
+			}
+		}
+	}
+
+	// 게임팩 전체 조회
 	public void getGameInfo() {
 		List<Game> list = MemberDAO.getInstance().getGameInfo();
 		System.out.println("전체 게임팩 조회");
@@ -126,9 +178,84 @@ public class MemberService {
 			System.out.println("대여여부: " + list.get(i).getGameStatus());
 			System.out.println("빌린회원 : " + list.get(i).getMemberId());
 			System.out.println("남은 대여 일수 : " + list.get(i).getLeft());
+
+			// 리뷰 조회
+			System.out.println("🎀🎀🎀🎀🎀🎀🎀🎀🎀리 뷰🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀");
+			List<Review> rList = MemberDAO.getInstance().Review();
+			if (rList.size() == 0) {
+				System.out.println("리뷰가 없습니다.");
+			} else {
+				for (int r = 0; r < rList.size(); r++) {
+					System.out.println("작성자 : " + rList.get(r).getMemberId());
+					System.out.println("내용 : " + rList.get(r).getText());
+				}
+				System.out.println("🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀🎀");
+			}
+			System.out.println("1. 리뷰 입력 | 2. 리뷰 수정 | 3. 리뷰 삭제");
+			int rMenu = Integer.parseInt(sc.nextLine());
+			Review review = new Review();
+			if (rMenu == 1) {
+				// 리뷰 입력
+
+				System.out.println("리뷰 입력");
+				System.out.println("작성자>");
+				String writer = sc.nextLine();
+				System.out.println("리뷰 입력>");
+				String text = sc.nextLine();
+
+				review.setMemberId(writer);
+				review.setText(text);
+				
+				int result = MemberDAO.getInstance().insertReview(review);
+
+				if (result > 0) {
+					System.out.println("리뷰 등록 성공");
+				} else {
+					System.out.println("리뷰 등록 실패");
+				}
+			} else if (rMenu == 2) {
+				// 리뷰 수정
+				System.out.println("리뷰 수정");
+				System.out.println("작성자>");
+				String writer = sc.nextLine();
+				if(memberInfo.equals(writer)) {
+				System.out.println("수정할 리뷰 입력>");
+				String text = sc.nextLine();
+
+				review.setMemberId(writer);
+				review.setText(text);
+
+				int result = MemberDAO.getInstance().changeReview(review);
+
+				if (result > 0) {
+					System.out.println("리뷰 수정이 완료되었습니다.");
+				} else {
+					System.out.println("리뷰가 수정되지 않았습니다.");
+				}
+				}else {
+					System.out.println("권한이 없는 사용자입니다.");
+				}
+			} else if (rMenu == 3) {
+				
+				// 리뷰 삭제
+				System.out.println("리뷰 삭제");
+				System.out.println("내 리뷰 삭제하기>");
+				String writer = sc.nextLine();
+
+				review.setMemberId(writer);
+
+				int result = MemberDAO.getInstance().deleteReview(writer);
+
+				if (result > 0) {
+					System.out.println("리뷰가 삭제되었습니다.");
+				} else {
+					System.out.println("리뷰가 삭제되지 않았습니다.");
+				}
+			}
 		}
 	}
 
+	// 게임팩 단건 조회
 	public void getGame() {
 		System.out.println("게임번호>");
 		String gameId = sc.nextLine();
