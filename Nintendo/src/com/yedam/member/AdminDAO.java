@@ -133,7 +133,7 @@ public class AdminDAO extends DAO {
 		Game game = null;
 		try {
 			conn();
-			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
+			String sql = "select g.game_id, g.game_name, g.g_num, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
 					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
 					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id";
 			pstmt = conn.prepareStatement(sql);
@@ -143,6 +143,7 @@ public class AdminDAO extends DAO {
 				game = new Game();
 				game.setGameId(rs.getString("game_id"));
 				game.setGameName(rs.getString("game_name"));
+				game.setGNum(rs.getInt("g_num"));
 				game.setStart(rs.getDate("game_rental_start"));
 				game.setEnd(rs.getDate("game_rental_end"));
 				game.setGameStatus(rs.getString("game_status"));
@@ -164,7 +165,7 @@ public class AdminDAO extends DAO {
 		Game game = null;
 		try {
 			conn();
-			String sql = "select g.game_id, g.game_name, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
+			String sql = "select g.game_id, g.game_name, g.g_num, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
 					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
 					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "where game_id = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -175,6 +176,7 @@ public class AdminDAO extends DAO {
 				game = new Game();
 				game.setGameId(rs.getString("game_id"));
 				game.setGameName(rs.getString("game_name"));
+				game.setGNum(rs.getInt("g_num"));
 				game.setStart(rs.getDate("game_rental_start"));
 				game.setEnd(rs.getDate("game_rental_end"));
 				game.setGameStatus(rs.getString("game_status"));
@@ -195,7 +197,7 @@ public class AdminDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "insert into game values ('00' || seq_id.nextval, ?, null, null, 'N', null)";
+			String sql = "insert into game values (seq_game.nextval, ?, null, null, 'N', null, 5)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, game.getGameName());
 

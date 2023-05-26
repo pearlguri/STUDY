@@ -12,8 +12,9 @@ public class Game {
 //	GAME_NAME                  VARCHAR2(40) 
 //	GAME_RENTAL_START          DATE         
 //	GAME_RENTAL_END            DATE         
-//	GAME_STATUS                CHAR(1)  
+//	GAME_STATUS                CHAR(1)      
 //	MEMBER_ID                  VARCHAR2(20) 
+//	G_NUM                      NUMBER       
 
 	private String gameId;
 	private String gameName;
@@ -22,4 +23,5 @@ public class Game {
 	private String gameStatus;
 	private String memberId;
 	private String left;
+	private int gNum;
 }

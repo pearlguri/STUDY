@@ -77,6 +77,7 @@ public class AdminService {
 			for (int i = 0; i < list.size(); i++) {
 				System.out.println("게임번호 : " + list.get(i).getGameId());
 				System.out.println("게임명: " + list.get(i).getGameName());
+				System.out.println("남은 수량: " + list.get(i).getGNum());
 				System.out.println("대여시작 : " + list.get(i).getStart());
 				System.out.println("대여종료 : " + list.get(i).getEnd());
 				System.out.println("대여여부: " + list.get(i).getGameStatus());
@@ -95,6 +96,7 @@ public class AdminService {
 		if (game != null) {
 			System.out.println("게임번호 : " + game.getGameId());
 			System.out.println("게임명: " + game.getGameName());
+			System.out.println("남은 수량: " + game.getGNum());
 			System.out.println("대여시작 : " + game.getStart());
 			System.out.println("대여종료 : " + game.getEnd());
 			System.out.println("대여여부: " + game.getGameStatus());

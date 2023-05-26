@@ -21,7 +21,7 @@ public class AdminApp {
 
 			switch (selectNo) {
 			case 1:
-				System.out.println("1. 전체 회원 조회 | 2. 등급별 회원 조회 | 3. 회원 등급 수정");
+				System.out.println("1. 전체 회원 조회 | 2. 등급별 회원 조회 | 3. 회원 등급 수정 | 4. 뒤로가기");
 				int mNo = Integer.parseInt(sc.nextLine());
 				if (mNo == 1) {
 					as.getMemberInfo();
@@ -32,9 +32,11 @@ public class AdminApp {
 				}else if(mNo ==3) {
 					as.modifyGrade();
 					break;
+				}else if(mNo == 4) {
+					break;
 				}
 			case 2:
-				System.out.println("1. 전체 조회 | 2. 단건 조회");
+				System.out.println("1. 전체 조회 | 2. 단건 조회 | 3. 뒤로가기");
 				int sNo = Integer.parseInt(sc.nextLine());
 				if(sNo == 1) {
 					as.getGameInfo();
@@ -42,9 +44,11 @@ public class AdminApp {
 				}else if(sNo == 2) {
 					as.getGame();
 					break;
+				}else if(sNo ==3) {
+					break;
 				}
 			case 3:
-				System.out.println("1. 게임팩 추가 | 2. 게임팩 삭제");
+				System.out.println("1. 게임팩 추가 | 2. 게임팩 삭제 | 3. 뒤로가기");
 				int gNo = Integer.parseInt(sc.nextLine());
 				if (gNo == 1) {
 					as.insertGame();
@@ -52,8 +56,9 @@ public class AdminApp {
 				} else if (gNo == 2) {
 					as.deleteGame();
 					break;
+				}else if(gNo == 3) {
+					break;					
 				}
-				break;
 			case 4:
 				as.deleteMember();
 				break;
