@@ -37,17 +37,17 @@ public class MemberApp {
 				} else if (gameNo == 3) {
 					ms.getGame();
 					System.out.println("1. 리뷰 입력 | 2. 리뷰 수정 | 3. 리뷰 삭제 | 4. 뒤로가기");
-					String rMenu = sc.nextLine();
-					if (rMenu == "1") {
+					int rMenu = Integer.parseInt(sc.nextLine());
+					if (rMenu == 1) {
 						ms.insertReview();
 						break;
-					} else if (rMenu == "2") {
+					} else if (rMenu == 2) {
 						ms.changeReview();
 						break;
-					} else if (rMenu == "3") {
+					} else if (rMenu == 3) {
 						ms.deleteReview();
 						break;
-					} else if(rMenu == "4") {						
+					} else if(rMenu == 4) {						
 						break;
 					}
 				}else if(gameNo ==4) {

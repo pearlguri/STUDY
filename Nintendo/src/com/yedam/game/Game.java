@@ -14,7 +14,8 @@ public class Game {
 //	GAME_RENTAL_END            DATE         
 //	GAME_STATUS                CHAR(1)      
 //	MEMBER_ID                  VARCHAR2(20) 
-//	G_NUM                      NUMBER       
+//	G_NUM                      NUMBER          
+    
 
 	private String gameId;
 	private String gameName;

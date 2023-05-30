@@ -52,11 +52,12 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "insert into member values('user' || seq_member.nextval, ?, ?, ?, 'N')";
+			String sql = "insert into member values(?, ?, ?, ?, 'N')";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberPw());
-			pstmt.setString(2, member.getMemberName());
-			pstmt.setString(3, member.getMemberPhone());
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPw());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getMemberPhone());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -165,7 +166,7 @@ public class MemberDAO extends DAO {
 			conn();
 			String sql = "select g.game_id, g.game_name, g.g_num, g.game_rental_start, g.game_rental_end, g.game_status,\r\n"
 					+ "    m.member_id, TO_CHAR(game_rental_end - game_rental_start) as left\r\n"
-					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id";
+					+ "from game g left join member m\r\n" + "on g.member_id = m.member_id\r\n" + "order by game_id, member_id";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
@@ -178,6 +179,7 @@ public class MemberDAO extends DAO {
 				game.setEnd(rs.getDate("game_rental_end"));
 				game.setGameStatus(rs.getString("game_status"));
 				game.setMemberId(rs.getString("member_id"));
+
 				game.setLeft(rs.getString("left"));
 
 				list.add(game);
@@ -349,5 +351,4 @@ public class MemberDAO extends DAO {
 		return result;
 	}
 	
-	 
 }

@@ -197,7 +197,7 @@ public class AdminDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "insert into game values (seq_game.nextval, ?, null, null, 'N', null, 5)";
+			String sql = "insert into game values ('no' || seq_game.nextval, ?, null, null, 'N', null, 5)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, game.getGameName());
 
@@ -209,6 +209,7 @@ public class AdminDAO extends DAO {
 		}
 		return result;
 	}
+	
 
 //	-게임팩 삭제
 	public int deleteGame(String id) {

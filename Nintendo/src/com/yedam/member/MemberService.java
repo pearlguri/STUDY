@@ -44,21 +44,18 @@ public class MemberService {
 	// 3. 회원가입
 	public void insertMember() {
 		System.out.println("회원가입");
-//		String id = "";
-//		while (true) {
-//			System.out.println("ID>");
-//			id = sc.nextLine();
-//			Member member = MemberDAO.getInstance().login(id);
-//			if (member != null) {
-//				System.out.println("존재하는 ID 입니다.");
-//			} else if (member == null) {
-//				System.out.println("사용가능한 ID입니다.");
-//				break;
-//			}
-//		}
-
-		System.out.println("회원 ID는 가입순서에 따라 자동 적용됩니다.");
-		System.out.println("✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨");
+		String id = "";
+		while (true) {
+			System.out.println("ID>");
+			id = sc.nextLine();
+			Member member = MemberDAO.getInstance().login(id);
+			if (member != null) {
+				System.out.println("존재하는 ID 입니다.");
+			} else if (member == null) {
+				System.out.println("사용가능한 ID입니다.");
+				break;
+			}
+		}
 
 		System.out.println("PW>");
 		String pw = sc.nextLine();
@@ -70,10 +67,10 @@ public class MemberService {
 		String phone = sc.nextLine();
 
 		Member mem = new Member();
+		mem.setMemberId(id);
 		mem.setMemberPw(pw);
 		mem.setMemberName(name);
 		mem.setMemberPhone(phone);
-
 		int result = MemberDAO.getInstance().insertMember(mem);
 
 		if (result > 0) {
@@ -100,30 +97,20 @@ public class MemberService {
 		System.out.println("1. 대여 | 2. 반납");
 		int rMenu = Integer.parseInt(sc.nextLine());
 
-		
-//		for(int i=0; i<list.size(); i++) {
-//			System.out.println(list.get(i).getGNum());
-//		}
-		
-		//해당하는 컬럼의 게임아이디?
-		
-		
 		Game game = new Game();
-		
+
 		System.out.println("게임 ID>");
 		String gameId = sc.nextLine();
 
-		
 		System.out.println("회원 ID>");
 		String memId = sc.nextLine();
-		
+
 		if (memberInfo.getMemberId().equals(memId)) {
 			game.setGameId(gameId);
 			game.setMemberId(memId);
 
 			int gNum = GameDAO.getInstance().Gamenum(gameId);
-			
-			
+
 			int result = 0;
 			if (rMenu == 1) {
 				if (gNum <= 0) {
@@ -138,9 +125,9 @@ public class MemberService {
 					}
 				}
 			} else if (rMenu == 2) {
-				
+
 				if (gNum < 5) {
-					
+
 					// 대여팩 5개 이하일때
 					result = MemberDAO.getInstance().rentalGame(game, rMenu);
 					if (result > 0) {
@@ -155,22 +142,8 @@ public class MemberService {
 		} else {
 			System.out.println("권한 없는 사용자 입니다.");
 		}
-	}
 
-//		if(rMenu == 1) {
-//			if (result > 0) {
-//				System.out.println("게임팩 대여 완료");
-//			} else {
-//				System.out.println("게임팩 대여 실패");
-//			}
-//		}else if(rMenu == 2) {
-//			if (result > 0) {
-//				System.out.println("게임팩 반납 완료");
-//			} else {
-//				System.out.println("게임팩 반납 실패");
-//			}
-//		}
-//	}
+	}
 
 	// 6. 게임팩조회 => 대여여부, 남은 대여일수 알수 있도록 service에서 구성
 	// 내가 대여 중인 게임팩

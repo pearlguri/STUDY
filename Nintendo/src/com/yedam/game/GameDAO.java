@@ -1,8 +1,5 @@
 package com.yedam.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.yedam.common.DAO;
 
 public class GameDAO extends DAO {
