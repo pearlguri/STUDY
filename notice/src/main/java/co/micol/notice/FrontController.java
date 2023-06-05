@@ -37,7 +37,6 @@ public class FrontController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException { 
 		// 처음 시작될 때 동작하는 메소드, 요청한 것을 담아 두는 곳
 		map.put("/main.do", new MainCommand()); //처음 들어오는 페이지를 돌려준다
-		
 	}
 
 	/**
