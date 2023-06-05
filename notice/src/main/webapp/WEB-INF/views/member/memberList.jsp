@@ -17,6 +17,9 @@
 ${m.memberId } : ${m.memberName } : ${m.memberAge } : ${m.memberTel } : ${m.memberGender } <br>
 			</c:forEach>
 		</div>
+		<div>
+		<a href="memberJoin.do">회원가입</a>
+		</div>
 	</div>
 </body>
 </html>

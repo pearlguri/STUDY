@@ -7,10 +7,12 @@
 	</select>
 	<select id="memberSelect"
 		resultType="co.micol.notice.member.service.MemberVO">
-		SELECT * FROM member WHERE member_id = #{memberId}>
+		SELECT * FROM member WHERE member_id = #{memberId}
 	</select>
-	<select id="memberInsert">
-	</select>
-	<select id="memberUpdate"></select>
-	<select id="memberDelete"></select>
+	<insert id="memberInsert">
+		INSERT INTO member
+		VALUES(#{memberId},#{memberPassword},#{memberName},#{memberAge},#{memberTel},#{memberGender})
+	</insert>
+	<update id="memberUpdate"></update>
+	<delete id="memberDelete"></delete>
 </mapper>
