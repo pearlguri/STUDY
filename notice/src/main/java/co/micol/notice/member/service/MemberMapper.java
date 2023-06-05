@@ -13,4 +13,5 @@ public interface MemberMapper {
 
 	int memberDelete(MemberVO vo);
 
+	MemberVO memberLogin(MemberVO vo);
 }

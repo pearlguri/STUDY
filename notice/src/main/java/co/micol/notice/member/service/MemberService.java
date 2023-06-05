@@ -13,4 +13,5 @@ public interface MemberService {
 
 	int memberDelete(MemberVO vo);
 
+	MemberVO memberLogin(MemberVO vo); //멤버로그인
 }
