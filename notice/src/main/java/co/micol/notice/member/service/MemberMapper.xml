@@ -15,4 +15,9 @@
 	</insert>
 	<update id="memberUpdate"></update>
 	<delete id="memberDelete"></delete>
+	<select id="memberLogin"
+		resultType="co.micol.notice.member.service.MemberVO">
+		SELECT * FROM member
+		WHERE member_id = #{memberId} AND member_password = #{memberPassword}
+	</select>
 </mapper>

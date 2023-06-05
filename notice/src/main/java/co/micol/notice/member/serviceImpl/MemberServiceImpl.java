@@ -39,4 +39,9 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	public MemberVO memberLogin(MemberVO vo) {
+		return map.memberLogin(vo);
+	}
+
 }

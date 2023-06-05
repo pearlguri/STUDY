@@ -19,6 +19,8 @@ import co.micol.notice.member.command.AjaxCheckId;
 import co.micol.notice.member.command.MemberInsert;
 import co.micol.notice.member.command.MemberJoin;
 import co.micol.notice.member.command.MemberList;
+import co.micol.notice.member.command.MemberLogin;
+import co.micol.notice.member.command.MemberLoginForm;
 
 /**
  * Servlet implementation class FrontController
@@ -47,6 +49,8 @@ public class FrontController extends HttpServlet {
 		map.put("/memberJoin.do", new MemberJoin()); // 회원가입 화면 호출
 		map.put("/memberInsert.do", new MemberInsert()); // 회원가입 수행
 		map.put("/ajaxCheckId.do", new AjaxCheckId()); //아이디 중복 체크
+		map.put("/memberLoginForm.do", new MemberLoginForm()); //로그인 폼 호출
+		map.put("/memberLogin.do", new MemberLogin()); //로그인 처리
 	}
 
 	/**
@@ -65,8 +69,7 @@ public class FrontController extends HttpServlet {
 		String viewPage = command.exec(request, response);
 
 		if (!viewPage.endsWith(".do")) {
-			if(viewPage.startsWith("Ajax")) {
-				System.out.println(viewPage.substring(5)+"===================");
+			if(viewPage.startsWith("Ajax:")) {
 				response.setContentType("text/html; charset=UTF-8");
 				response.getWriter().append(viewPage.substring(5));
 				return;
