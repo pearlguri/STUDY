@@ -1,43 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="./css/main.css" rel="stylesheet" type="text/css">
 </head>
-<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0"
-	style="background-color: #F6F6F6">
-	<div class="menu">
-		<nav class="clearfix">
-			<ul class="clearfix">
-				<li><a href="noticeList.do">게시글 목록</a></li>
-				<li><a href="memberList.do">멤버보기</a></li>
-				<li><a href="memberLoginForm.do">로그인</a></li>
-			</ul>
-		</nav>
-	</div>
-</body>
 <body>
-	<div align="center">
+<div align="center">
+	<jsp:include page="../main/menu.jsp"></jsp:include>
+	<div><h1>회원 목록 보기</h1></div>
+	<div>
+		<table border="1">
+			<thead>
+				<tr>
+					<th width="150">아이디</th>
+					<th width="150">이름</th>
+					<th width="150">나이</th>
+					<th width="150">전화번호</th>
+					<th width="150">성별</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${members }" var="m">
+					<tr>
+						<td align="center">${m.memberId }</td>
+						<td align="center">${m.memberName }</td>
+						<td align="center">${m.memberAge }</td>
+						<td align="center">${m.memberTel }</td>
+						<td align="center">${m.memberGender }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 		<div>
-			<h1>회원 목록 보기</h1>
-		</div>
-		<div>
-			<c:forEach items="${members }" var="m">
-${m.memberId } : ${m.memberName } : ${m.memberAge } : ${m.memberTel } : ${m.memberGender } <br>
-			</c:forEach>
-		</div>
-		<div>
-			<a href="memberJoin.do">회원가입</a>
+			<jsp:include page="../main/footer.jsp"></jsp:include>
 		</div>
 	</div>
 </body>
-<footer>
-	<div>
-		<jsp:include page="../main/footer/footer.jsp"></jsp:include>
-	</div>
-</footer>
 </html>

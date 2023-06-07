@@ -10,7 +10,7 @@ import co.micol.notice.service.NoticeService;
 import co.micol.notice.service.NoticeVO;
 
 public class NoticeServiceImpl implements NoticeService {
-	SqlSession SqlSession = DataSource.getInstance().openSession(true); // 데이터베이스 연
+	SqlSession SqlSession = DataSource.getInstance().openSession(true); // 데이터베이스 연결
 	NoticeMapper map = SqlSession.getMapper(NoticeMapper.class); // mapper 연결
 
 	@Override

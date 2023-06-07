@@ -10,18 +10,58 @@
 <body>
 	<div align="center">
 		<div>
+			<jsp:include page="../main/menu.jsp"></jsp:include>
 			<h1>게시글 목록</h1>
 		</div>
+		<table border="1">
+			<thead>
+				<tr>
+					<th width="100">순번</th>
+					<th width="150">작성자</th>
+					<th width="200">제목</th>
+					<th width="150">작성일자</th>
+					<th width="100">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${notices }" var="n">
+					<tr onmouseover="this.style.background='#fcecae'"
+						onmouseleave="this.style.background='#FFFFFF'"
+						onclick="noticeChoice(${n.noticeId })">
+
+						<td align="center">${n.noticeId }</td>
+						<td align="center">${n.noticeWriter }</td>
+						<td>${n.noticeTitle }</td>
+						<td align="center">${n.noticeWdate }</td>
+						<td align="center">${n.noticeHit }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<br>
 		<div>
-			<c:forEach items="${notices }" var="n">
-			${n.noticeId } : ${n.noticeWriter } : ${n.noticeTitle } : ${n.noticeWdate } : ${n.noticeHit } <br>
-			</c:forEach>
+			<c:if test="${not empty id }">
+				<button type="button" onclick="location.href='noticeInsertForm.do'">새글작성</button>
+			</c:if>
+		</div>
+		<div>
+			<form id="frm" action="noticeSelect.do" method="post">
+				<input type="hidden" id="noticeId" name="noticeId">
+			</form>
+		</div>
+		<script type="text/javascript">
+	function noticeChoice(id){
+// 		location.href = url;
+// 		let url = 'noticeSelect.do?noticeId='+ id';
+		let frm = document.getElementById("frm");
+		frm.noticeId.value = id;
+		frm.submit();
+	}
+	</script>
+		<div>
+			<jsp:include page="../main/footer.jsp"></jsp:include>
 		</div>
 	</div>
 </body>
-<footer>
-	<div>
-		<jsp:include page="../main/footer/footer.jsp"></jsp:include>
-	</div>
-</footer>
+
 </html>
