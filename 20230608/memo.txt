@@ -1,0 +1,9 @@
+tiles extras 3.0.8 maven 복붙
+
+tiles jsp 3.0.8 jar 다운 library복붙
+
+web.xml에 listner와 servlet mapping해주기
+
+tiles.xml을 WEB-INF 밑에 만들어서 definitions복붙
+
+bootstrap template 다운, 압축풀기 webapp밑에 복붙
