@@ -19,6 +19,9 @@ import co.micol.notice.command.NoticeInsertForm;
 import co.micol.notice.command.NoticeList;
 import co.micol.notice.command.NoticeSelect;
 import co.micol.notice.command.NoticeUpdate;
+import co.micol.notice.product.command.ProductInsert;
+import co.micol.notice.product.command.ProductInsertForm;
+import co.micol.notice.product.command.ProductList;
 import co.micol.notice.common.Command;
 import co.micol.notice.main.command.MainCommand;
 import co.micol.notice.member.command.AjaxCheckId;
@@ -66,6 +69,10 @@ public class FrontController extends HttpServlet {
 		map.put("/memberLoginForm.do", new MemberLoginForm()); //로그인 폼 호출
 		map.put("/memberLogin.do", new MemberLogin()); //로그인 처리
 		map.put("/memberLogout.do", new MemberLogout()); //로그아웃 처리
+		map.put("/productList.do", new ProductList()); //제품 목록 가져오기
+		map.put("/productInsertForm.do", new ProductInsertForm()); //제품등록 폼 호출
+		map.put("/productInsert.do", new ProductInsert()); //제품등록 처리 및 파일업로드
+		
 	}
 
 	/**

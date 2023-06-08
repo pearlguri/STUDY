@@ -1,0 +1,18 @@
+https://dololak.tistory.com/726 : part api 업로드 방법
+  -servlet 3.0 이상에서 제공하는 api
+ ----------------------------------------------------------------- 
+cos 라이브러리를 이용해서 파일업로드 방법
+  -가장 쉽다.
+ String saveDir = "C:\\Users\\user\\Desktop\\JAVA\\upload";  ->저장할 경로
+		int size = 10 * 1024 * 1024;  ->파일 최대 크기
+		MultipartRequest multi = new MultipartRequest(req, saveDir, size, "utf-8", new DefaultFileRenamePolicy()); 
+							-> multipartrequest 객체 생성 (requset객체(form데이터가 담겨있음), 저장경로, 파일최대사이즈, encoding타입, 동일한 file명이 온다면 알아서 rename시켜줌)  
+		String name = multi.getFilesystemName("f"); 
+					-> multi.getFilesystemName하면 save directory로 파일이 전송됨, 우리는"pfile", 폼에서 전송되는 파일명을 써야함. name은 전송되는파일명
+		String origin = multi.getOriginalFileName("f"); 
+			-> origin은 원래 파일명
+		long fileSize = multi.getFile("f").length();
+-------------------------------------------------------------------
+commons-fileUpload 라이브러리를 이용하는 방법 : 가장 많이 사용함
+  -spring framework 에서 많이 사용
+  
