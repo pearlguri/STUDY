@@ -3,12 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- java vo 와 db column명 매핑, 그 외 필요한 여러가지 제약조건들을 설정 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
-	<!-- database 환경설정 -->
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -22,8 +20,7 @@
 			</dataSource>
 		</environment>
 	</environments>
-	<!-- sql mapper를 등록하는 곳 -->
 	<mappers>
-		<package name="co.micol.notice" />
+  		<package name="com.codecask.makeProject"/>
 	</mappers>
 </configuration>
